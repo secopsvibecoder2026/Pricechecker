@@ -19,6 +19,10 @@ PriceChecker lar deg enkelt finne ut hva et produkt er verdt ved å sammenligne 
 - **Backend:** Node.js / Python (TBD)
 - **Datakilde:** Prisdata fra kjente norske og internasjonale nettbutikker
 
+## Live demo
+
+Siden er hostet på GitHub Pages: https://secopsvibecoder2026.github.io/pricechecker
+
 ## Kom i gang
 
 Dokumentasjon for oppsett og utvikling kommer etter hvert som prosjektet utvikles.
