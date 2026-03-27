@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PriceChecker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="hero">
+    <h1>PriceChecker</h1>
+    <p class="tagline">Finn ut hva produktet ditt er verdt</p>
+    <button id="openFormBtn" class="btn-primary">Sjekk pris</button>
+  </div>
+
+  <div id="overlay" class="overlay hidden"></div>
+
+  <div id="modal" class="modal hidden">
+    <button id="closeBtn" class="close-btn" aria-label="Lukk">&times;</button>
+    <h2>Legg inn produktinformasjon</h2>
+
+    <form id="priceForm">
+
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="imageInput" accept="image/*" hidden />
+        <img id="preview" src="" alt="Forhåndsvisning" class="hidden" />
+        <div id="uploadPlaceholder">
+          <span class="upload-icon">&#128247;</span>
+          <p>Klikk eller dra bilde hit</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="productName">Produktnavn *</label>
+        <input type="text" id="productName" placeholder="F.eks. iPhone 14 Pro" required />
+      </div>
+
+      <div class="form-group">
+        <label for="category">Kategori *</label>
+        <select id="category" required>
+          <option value="" disabled selected>Velg kategori</option>
+          <option value="elektronikk">Elektronikk</option>
+          <option value="klær">Klær og sko</option>
+          <option value="møbler">Møbler og interiør</option>
+          <option value="sport">Sport og fritid</option>
+          <option value="bøker">Bøker og media</option>
+          <option value="leker">Leker og spill</option>
+          <option value="annet">Annet</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="condition">Tilstand *</label>
+          <select id="condition" required>
+            <option value="" disabled selected>Velg tilstand</option>
+            <option value="ny">Ny / ubrukt</option>
+            <option value="pent-brukt">Pent brukt</option>
+            <option value="brukt">Brukt</option>
+            <option value="slitt">Slitt</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Alder (år)</label>
+          <input type="number" id="age" placeholder="F.eks. 2" min="0" max="100" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Tilleggsinformasjon</label>
+        <textarea id="description" rows="3" placeholder="Eventuelle skader, tilbehør inkludert, kjøpsdato osv."></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary btn-full">Finn prisestimat</button>
+    </form>
+
+    <div id="result" class="result hidden">
+      <h3>Prisestimat</h3>
+      <p class="estimate-label">Estimert markedspris</p>
+      <p class="estimate-value" id="estimateValue">–</p>
+      <p class="estimate-note">Basert på sammenligning av kjente nettbutikker og markedsplasser.</p>
+      <button id="resetBtn" class="btn-secondary btn-full">Sjekk et nytt produkt</button>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
