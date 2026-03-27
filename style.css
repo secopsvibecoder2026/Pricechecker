@@ -237,5 +237,96 @@ textarea { resize: vertical; }
   margin-bottom: 1.5rem;
 }
 
+/* ── Loading ── */
+.loading {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.loading p {
+  color: #8b8fa8;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #2e3250;
+  border-top-color: #6c63ff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Source sections ── */
+.source-section {
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.source-section h4 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8b8fa8;
+  margin-bottom: 0.6rem;
+}
+
+.source-empty {
+  color: #8b8fa8;
+  font-size: 0.85rem;
+}
+
+.listing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  background: #12151f;
+  margin-bottom: 0.4rem;
+  text-decoration: none;
+  transition: background 0.15s;
+  gap: 0.5rem;
+}
+
+.listing-row:hover {
+  background: #1e2236;
+}
+
+.listing-title {
+  font-size: 0.85rem;
+  color: #c8cadc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.listing-price {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6c63ff;
+  white-space: nowrap;
+}
+
+/* ── Estimate range ── */
+.estimate-range {
+  color: #8b8fa8;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.no-data {
+  font-size: 1.8rem !important;
+  color: #8b8fa8 !important;
+  -webkit-text-fill-color: #8b8fa8 !important;
+}
+
 /* ── Utility ── */
 .hidden { display: none !important; }
