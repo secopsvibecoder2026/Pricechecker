@@ -10,18 +10,36 @@ const CONFIG = {
   ebay: {
     clientId:     'YOUR_EBAY_CLIENT_ID',
     clientSecret: 'YOUR_EBAY_CLIENT_SECRET',
-    // OAuth token endpoint (production)
-    tokenUrl: 'https://api.ebay.com/identity/v1/oauth2/token',
-    // Browse API search endpoint (production)
+    tokenUrl:  'https://api.ebay.com/identity/v1/oauth2/token',
     searchUrl: 'https://api.ebay.com/buy/browse/v1/item_summary/search',
   },
 
-  // Finn.no does not have a public API.
-  // We fetch their RSS feed via a CORS proxy.
+  // Finn.no — no public API, fetched via RSS + CORS proxy.
   finn: {
-    // RSS search URL — {query} is replaced at runtime
-    rssUrl: 'https://www.finn.no/bap/forsale/search.html?q={query}&feed=rss',
-    // CORS proxy used to fetch Finn.no RSS from the browser
+    rssUrl:    'https://www.finn.no/bap/forsale/search.html?q={query}&feed=rss',
+    corsProxy: 'https://api.allorigins.win/get?url=',
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // Prisjakt.no — Norwegian price comparison (new products).
+  // Register for a free partner API key at:
+  //   https://developer.prisjakt.no/
+  // Copy your API key below.
+  // ─────────────────────────────────────────────────────────────
+  prisjakt: {
+    apiKey:    'YOUR_PRISJAKT_API_KEY',
+    searchUrl: 'https://api.prisjakt.no/v1/products/search',
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // Craigslist — American classifieds (used items).
+  // No API key needed. Uses RSS feed via CORS proxy.
+  // Change 'city' to any Craigslist city slug, e.g.:
+  //   sfbay, newyork, losangeles, chicago, seattle, boston
+  // ─────────────────────────────────────────────────────────────
+  craigslist: {
+    city:      'sfbay',
+    rssUrl:    'https://{city}.craigslist.org/search/sss?format=rss&query={query}',
     corsProxy: 'https://api.allorigins.win/get?url=',
   },
 };
