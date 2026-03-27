@@ -9,7 +9,6 @@ const preview     = document.getElementById('preview');
 const placeholder = document.getElementById('uploadPlaceholder');
 const priceForm   = document.getElementById('priceForm');
 const result      = document.getElementById('result');
-const resetBtn    = document.getElementById('resetBtn');
 
 // ─── Modal open / close ──────────────────────────────────────
 openFormBtn.addEventListener('click', openModal);
@@ -81,16 +80,7 @@ priceForm.addEventListener('submit', async (e) => {
   showResults(name, ebay, finn);
 });
 
-// ─── Reset ───────────────────────────────────────────────────
-resetBtn.addEventListener('click', () => {
-  priceForm.reset();
-  preview.src = '';
-  preview.classList.add('hidden');
-  placeholder.classList.remove('hidden');
-  result.classList.add('hidden');
-  result.innerHTML = '';
-  priceForm.classList.remove('hidden');
-});
+// Reset button is injected dynamically into the result div — see resetForm()
 
 // ─── eBay API ────────────────────────────────────────────────
 
@@ -182,65 +172,90 @@ function showLoading() {
 }
 
 function showResults(name, ebay, finn) {
-  const allPrices = [
-    ...ebay.map(i => i.price),
-    // Convert NOK to USD roughly for the combined estimate (1 USD ≈ 10.5 NOK)
-    ...finn.map(i => i.price / 10.5),
-  ].filter(p => p > 0);
+  // Normalise all listings to USD for sorting/estimate
+  const allListings = [
+    ...ebay.map(i => ({ ...i, usd: i.price })),
+    ...finn.map(i => ({ ...i, usd: i.price / 10.5 })),
+  ].filter(i => i.usd > 0);
 
-  const estimate = allPrices.length > 0
-    ? Math.round(allPrices.reduce((a, b) => a + b, 0) / allPrices.length)
-    : null;
+  if (allListings.length === 0) {
+    result.innerHTML = `
+      <h3>Price estimate</h3>
+      <p class="estimate-label">No listings found for "${name}"</p>
+      <p class="estimate-value no-data">–</p>
+      <button id="resetBtn" class="btn-secondary btn-full" style="margin-top:1.5rem">
+        Check another product
+      </button>`;
+    document.getElementById('resetBtn').addEventListener('click', resetForm);
+    return;
+  }
 
-  const low  = allPrices.length > 0 ? Math.round(Math.min(...allPrices)) : null;
-  const high = allPrices.length > 0 ? Math.round(Math.max(...allPrices)) : null;
+  // Sort ascending by USD price
+  allListings.sort((a, b) => a.usd - b.usd);
+
+  const prices   = allListings.map(i => i.usd);
+  const estimate = Math.round(prices.reduce((a, b) => a + b, 0) / prices.length);
+  const low      = Math.round(prices[0]);
+  const high     = Math.round(prices[prices.length - 1]);
+
+  // 3 cheapest and 3 most expensive
+  const bottomThree = allListings.slice(0, 3);
+  const topThree    = allListings.slice(-3).reverse();
 
   result.innerHTML = `
-    <h3>Price estimate</h3>
-    <p class="estimate-label">Estimated market price for "${name}"</p>
-    ${estimate !== null
-      ? `<p class="estimate-value">${formatUSD(estimate)}</p>
-         <p class="estimate-range">Range: ${formatUSD(low)} – ${formatUSD(high)}</p>`
-      : `<p class="estimate-value no-data">No data found</p>`}
+    <div class="estimate-hero">
+      <p class="estimate-label">Estimated market price for</p>
+      <p class="estimate-product-name">"${name}"</p>
+      <p class="estimate-value">${formatUSD(estimate)}</p>
+      <div class="estimate-range-bar">
+        <span class="range-low">${formatUSD(low)}</span>
+        <div class="range-track"><div class="range-fill"></div></div>
+        <span class="range-high">${formatUSD(high)}</span>
+      </div>
+      <p class="estimate-meta">Based on ${allListings.length} listing${allListings.length !== 1 ? 's' : ''} from eBay &amp; Finn.no</p>
+    </div>
 
-    ${renderSourceSection('eBay', ebay, i => formatUSD(i.price))}
-    ${renderSourceSection('Finn.no', finn, i => formatNOK(i.price))}
+    <div class="evidence-grid">
+      ${renderEvidenceColumn('High range', topThree)}
+      ${renderEvidenceColumn('Low range', bottomThree)}
+    </div>
 
     <button id="resetBtn" class="btn-secondary btn-full" style="margin-top:1.5rem">
       Check another product
     </button>`;
 
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    priceForm.reset();
-    preview.src = '';
-    preview.classList.add('hidden');
-    placeholder.classList.remove('hidden');
-    result.classList.add('hidden');
-    result.innerHTML = '';
-    priceForm.classList.remove('hidden');
-  });
+  document.getElementById('resetBtn').addEventListener('click', resetForm);
 }
 
-function renderSourceSection(label, items, formatFn) {
-  if (items.length === 0) {
+function renderEvidenceColumn(label, items) {
+  const isHigh = label === 'High range';
+  const rows = items.map(i => {
+    const priceStr = i.currency === 'NOK' ? formatNOK(i.price) : formatUSD(i.price);
     return `
-      <div class="source-section">
-        <h4>${label}</h4>
-        <p class="source-empty">No results found or source unavailable.</p>
-      </div>`;
-  }
-
-  const rows = items.map(i => `
-    <a class="listing-row" href="${i.url}" target="_blank" rel="noopener">
-      <span class="listing-title">${i.title}</span>
-      <span class="listing-price">${formatFn(i)}</span>
-    </a>`).join('');
+      <a class="evidence-card" href="${i.url}" target="_blank" rel="noopener">
+        <span class="evidence-source ${i.source === 'eBay' ? 'tag-ebay' : 'tag-finn'}">${i.source}</span>
+        <span class="evidence-title">${i.title}</span>
+        <span class="evidence-price ${isHigh ? 'price-high' : 'price-low'}">${priceStr}</span>
+      </a>`;
+  }).join('');
 
   return `
-    <div class="source-section">
-      <h4>${label}</h4>
+    <div class="evidence-column">
+      <h4 class="evidence-heading ${isHigh ? 'heading-high' : 'heading-low'}">
+        ${isHigh ? '▲' : '▼'} ${label}
+      </h4>
       ${rows}
     </div>`;
+}
+
+function resetForm() {
+  priceForm.reset();
+  preview.src = '';
+  preview.classList.add('hidden');
+  placeholder.classList.remove('hidden');
+  result.classList.add('hidden');
+  result.innerHTML = '';
+  priceForm.classList.remove('hidden');
 }
 
 // ─── Formatting helpers ──────────────────────────────────────

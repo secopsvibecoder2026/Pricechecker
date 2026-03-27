@@ -237,6 +237,127 @@ textarea { resize: vertical; }
   margin-bottom: 1.5rem;
 }
 
+/* ── Estimate hero ── */
+.estimate-hero {
+  text-align: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #2e3250;
+  margin-bottom: 0.5rem;
+}
+
+.estimate-product-name {
+  font-size: 0.95rem;
+  color: #c8cadc;
+  margin-bottom: 0.6rem;
+  font-style: italic;
+}
+
+.estimate-range-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.6rem 0 0.5rem;
+}
+
+.range-low, .range-high {
+  font-size: 0.8rem;
+  color: #8b8fa8;
+  white-space: nowrap;
+}
+
+.range-track {
+  flex: 1;
+  height: 4px;
+  background: #2e3250;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.range-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #48c6ef, #6c63ff);
+}
+
+.estimate-meta {
+  font-size: 0.78rem;
+  color: #8b8fa8;
+  margin-top: 0.25rem;
+}
+
+/* ── Evidence grid ── */
+.evidence-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.evidence-column {}
+
+.evidence-heading {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.heading-high { color: #48c6ef; }
+.heading-low  { color: #a78bfa; }
+
+.evidence-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 10px;
+  background: #12151f;
+  margin-bottom: 0.4rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.evidence-card:hover {
+  background: #1e2236;
+  border-color: #2e3250;
+}
+
+.evidence-source {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.tag-ebay { background: #1a3a5c; color: #48c6ef; }
+.tag-finn { background: #2a1a3a; color: #a78bfa; }
+
+.evidence-title {
+  font-size: 0.8rem;
+  color: #c8cadc;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
+}
+
+.evidence-price {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-top: 0.1rem;
+}
+
+.price-high { color: #48c6ef; }
+.price-low  { color: #a78bfa; }
+
 /* ── Loading ── */
 .loading {
   text-align: center;
