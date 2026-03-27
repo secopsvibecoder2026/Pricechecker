@@ -109,6 +109,9 @@ const conditionMap = {
 };
 
 async function fetchEbayPrices(query, condition) {
+  // Skip eBay if credentials are still placeholder values
+  if (CONFIG.ebay.clientId === 'YOUR_EBAY_CLIENT_ID') return [];
+
   const token = await getEbayToken();
 
   const params = new URLSearchParams({
@@ -148,15 +151,23 @@ async function fetchFinnPrices(query) {
   const items = Array.from(xml.querySelectorAll('item'));
 
   return items.slice(0, 5).map(item => {
-    const title     = item.querySelector('title')?.textContent ?? '';
-    const link      = item.querySelector('link')?.textContent ?? '';
-    // Finn.no puts the price in the description as "X kr"
-    const desc      = item.querySelector('description')?.textContent ?? '';
-    const priceMatch = desc.match(/([\d\s]+)\s*kr/);
-    const price     = priceMatch ? parseInt(priceMatch[1].replace(/\s/g, ''), 10) : null;
+    const title = item.querySelector('title')?.textContent ?? '';
+    const link  = item.querySelector('link')?.textContent ?? '';
+    const desc  = item.querySelector('description')?.textContent ?? '';
+
+    // Price appears in multiple places depending on Finn.no category:
+    // 1. Custom <finn:price> element
+    // 2. Title suffix  "Product name - 8 000 kr"
+    // 3. Description text  "Pris: 8 000 kr" or "8000 kr"
+    const finnPrice = item.getElementsByTagNameNS('*', 'price')[0]?.textContent ?? '';
+    const searchIn  = finnPrice || title + ' ' + desc;
+    const match     = searchIn.match(/([\d\s.,]+)\s*kr/i);
+    const price     = match
+      ? parseInt(match[1].replace(/[\s.]/g, '').replace(',', ''), 10)
+      : null;
 
     return { source: 'Finn.no', title, price, currency: 'NOK', url: link };
-  }).filter(item => item.price !== null);
+  }).filter(item => item.price !== null && item.price > 0);
 }
 
 // ─── Results display ─────────────────────────────────────────
@@ -167,7 +178,7 @@ function showLoading() {
   result.innerHTML = `
     <div class="loading">
       <div class="spinner"></div>
-      <p>Fetching prices from eBay and Finn.no…</p>
+      <p>Fetching prices from Finn.no${CONFIG.ebay.clientId !== 'YOUR_EBAY_CLIENT_ID' ? ' and eBay' : ''}…</p>
     </div>`;
 }
 
