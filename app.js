@@ -88,12 +88,12 @@ resetBtn.addEventListener('click', () => {
 
 // Simple mock estimate — will be replaced with real API calls
 function mockEstimate(name, condition, age) {
-  const base = 1000 + (name.length * 47);
-  const conditionFactor = { ny: 1.0, 'pent-brukt': 0.7, brukt: 0.5, slitt: 0.3 };
+  const base = 100 + (name.length * 5);
+  const conditionFactor = { new: 1.0, 'like-new': 0.7, used: 0.5, worn: 0.3 };
   const ageFactor = Math.max(0.2, 1 - age * 0.08);
   return Math.round(base * (conditionFactor[condition] ?? 0.6) * ageFactor / 10) * 10;
 }
 
 function formatPrice(amount) {
-  return amount.toLocaleString('nb-NO') + ' kr';
+  return '$' + amount.toLocaleString('en-US');
 }

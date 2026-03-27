@@ -1,32 +1,36 @@
 # PriceChecker
 
-En webbasert tjeneste som sjekker priser på produkter mot kjente nettbutikker og markedsplasser, og gir deg et prisestimat for produktet du ønsker å selge.
+A web-based service that checks product prices against known online stores and marketplaces, giving you a price estimate for the product you want to sell.
 
-## Om prosjektet
+## About
 
-PriceChecker lar deg enkelt finne ut hva et produkt er verdt ved å sammenligne priser fra flere kjente nettsider. Tjenesten henter inn prisdata og gir deg et estimat basert på gjeldende markedspris.
+PriceChecker lets you quickly find out what a product is worth by comparing prices from multiple well-known websites. The service fetches pricing data and returns an estimate based on the current market price.
 
-## Funksjoner
+## Features
 
-- Søk etter produkter basert på navn, kategori eller strekkode
-- Automatisk prisinnhenting fra kjente nettbutikker og markedsplasser
-- Prisestimat basert på sammenligning av innhentede priser
-- Oversikt over prisutviklingen over tid
+- Search for products by name, category, or barcode
+- Automatic price fetching from known online retailers and marketplaces
+- Price estimate based on comparison of collected prices
+- Price history and trend tracking (planned)
 
-## Teknologi
+## Tech stack
 
 - **Frontend:** HTML, CSS, JavaScript
-- **Backend:** Node.js / Python (TBD)
-- **Datakilde:** Prisdata fra kjente norske og internasjonale nettbutikker
+- **Backend:** TBD (Node.js or Python)
+- **Data sources:** Pricing data from known national and international online stores
 
-## Kom i gang
+## Live demo
 
-Dokumentasjon for oppsett og utvikling kommer etter hvert som prosjektet utvikles.
+The site is hosted on GitHub Pages: https://secopsvibecoder2026.github.io/pricechecker
 
-## Bidra
+## Getting started
 
-Pull requests er velkomne. For større endringer, åpne gjerne en issue først for å diskutere hva du ønsker å endre.
+Setup and development documentation will be added as the project grows.
 
-## Lisens
+## Contributing
+
+Pull requests are welcome. For larger changes, please open an issue first to discuss what you would like to change.
+
+## License
 
 [MIT](LICENSE)

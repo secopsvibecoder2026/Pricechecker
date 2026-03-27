@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,78 +10,78 @@
 
   <div class="hero">
     <h1>PriceChecker</h1>
-    <p class="tagline">Finn ut hva produktet ditt er verdt</p>
-    <button id="openFormBtn" class="btn-primary">Sjekk pris</button>
+    <p class="tagline">Find out what your product is worth</p>
+    <button id="openFormBtn" class="btn-primary">Check price</button>
   </div>
 
   <div id="overlay" class="overlay hidden"></div>
 
   <div id="modal" class="modal hidden">
-    <button id="closeBtn" class="close-btn" aria-label="Lukk">&times;</button>
-    <h2>Legg inn produktinformasjon</h2>
+    <button id="closeBtn" class="close-btn" aria-label="Close">&times;</button>
+    <h2>Enter product information</h2>
 
     <form id="priceForm">
 
       <div class="upload-area" id="uploadArea">
         <input type="file" id="imageInput" accept="image/*" hidden />
-        <img id="preview" src="" alt="Forhåndsvisning" class="hidden" />
+        <img id="preview" src="" alt="Image preview" class="hidden" />
         <div id="uploadPlaceholder">
           <span class="upload-icon">&#128247;</span>
-          <p>Klikk eller dra bilde hit</p>
+          <p>Click or drag image here</p>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="productName">Produktnavn *</label>
-        <input type="text" id="productName" placeholder="F.eks. iPhone 14 Pro" required />
+        <label for="productName">Product name *</label>
+        <input type="text" id="productName" placeholder="E.g. iPhone 14 Pro" required />
       </div>
 
       <div class="form-group">
-        <label for="category">Kategori *</label>
+        <label for="category">Category *</label>
         <select id="category" required>
-          <option value="" disabled selected>Velg kategori</option>
-          <option value="elektronikk">Elektronikk</option>
-          <option value="klær">Klær og sko</option>
-          <option value="møbler">Møbler og interiør</option>
-          <option value="sport">Sport og fritid</option>
-          <option value="bøker">Bøker og media</option>
-          <option value="leker">Leker og spill</option>
-          <option value="annet">Annet</option>
+          <option value="" disabled selected>Select category</option>
+          <option value="electronics">Electronics</option>
+          <option value="clothing">Clothing &amp; shoes</option>
+          <option value="furniture">Furniture &amp; interior</option>
+          <option value="sports">Sports &amp; leisure</option>
+          <option value="books">Books &amp; media</option>
+          <option value="toys">Toys &amp; games</option>
+          <option value="other">Other</option>
         </select>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="condition">Tilstand *</label>
+          <label for="condition">Condition *</label>
           <select id="condition" required>
-            <option value="" disabled selected>Velg tilstand</option>
-            <option value="ny">Ny / ubrukt</option>
-            <option value="pent-brukt">Pent brukt</option>
-            <option value="brukt">Brukt</option>
-            <option value="slitt">Slitt</option>
+            <option value="" disabled selected>Select condition</option>
+            <option value="new">New / unused</option>
+            <option value="like-new">Like new</option>
+            <option value="used">Used</option>
+            <option value="worn">Worn</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="age">Alder (år)</label>
-          <input type="number" id="age" placeholder="F.eks. 2" min="0" max="100" />
+          <label for="age">Age (years)</label>
+          <input type="number" id="age" placeholder="E.g. 2" min="0" max="100" />
         </div>
       </div>
 
       <div class="form-group">
-        <label for="description">Tilleggsinformasjon</label>
-        <textarea id="description" rows="3" placeholder="Eventuelle skader, tilbehør inkludert, kjøpsdato osv."></textarea>
+        <label for="description">Additional information</label>
+        <textarea id="description" rows="3" placeholder="Any damage, included accessories, purchase date, etc."></textarea>
       </div>
 
-      <button type="submit" class="btn-primary btn-full">Finn prisestimat</button>
+      <button type="submit" class="btn-primary btn-full">Get price estimate</button>
     </form>
 
     <div id="result" class="result hidden">
-      <h3>Prisestimat</h3>
-      <p class="estimate-label">Estimert markedspris</p>
+      <h3>Price estimate</h3>
+      <p class="estimate-label">Estimated market price</p>
       <p class="estimate-value" id="estimateValue">–</p>
-      <p class="estimate-note">Basert på sammenligning av kjente nettbutikker og markedsplasser.</p>
-      <button id="resetBtn" class="btn-secondary btn-full">Sjekk et nytt produkt</button>
+      <p class="estimate-note">Based on comparison from known online stores and marketplaces.</p>
+      <button id="resetBtn" class="btn-secondary btn-full">Check another product</button>
     </div>
 
   </div>
